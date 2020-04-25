@@ -174,6 +174,10 @@ module.exports = {
     },
 
     setReviewed: function(req, res, next){
+        if(!req.isMod){
+            return next(new errs.BadRequestError("Only mods can do that"));
+        }
+
         con.query("UPDATE reviews SET reviewed=1 WHERE id = " + mysql.escape(req.body.reviewID), function(err, result, fields){
             if(err) return next(new restify.errors.InternalServerError('Could not connect to mysql database'));
             res.send("Done");
@@ -287,6 +291,10 @@ module.exports = {
     },
 
     createAccount: function(req, res, next){
+        if(!req.isMod){
+            return next(new errs.BadRequestError("Only mods can do that"));
+        }
+        
         var jahrgang = req.body.jahrgang;
         var vorname = req.body.vorname;
         var nachname = req.body.nachname;
