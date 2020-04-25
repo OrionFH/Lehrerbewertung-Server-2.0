@@ -219,7 +219,7 @@ module.exports = {
     },
 
     nick: function(req, res, next){
-        nick = req.body.nick.toLowerCase();
+        var nick = req.body.nick.toLowerCase();
         if(nick.length == 0){
             return next(new errs.BadRequestError("Empty nick"));
         }
